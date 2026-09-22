@@ -41,6 +41,8 @@ const aboutInput = profileEditModal.querySelector(
   ".popup__input_type_description",
 );
 
+const profileForm = document.querySelector("#edit-profile-form");
+
 function openModal(modal) {
   modal.classList.add("popup_is-opened");
 }
@@ -58,6 +60,17 @@ function handleOpenEditModal() {
   fillProfileForm();
   openModal(profileEditModal);
 }
+
+function handleProfileFormSubmit(evt) {
+  evt.preventDefault();
+
+  profileName.textContent = nameInput.value;
+  profileAbout.textContent = aboutInput.value;
+
+  closeModal(profileEditModal);
+}
+
+profileForm.addEventListener("submit", handleProfileFormSubmit);
 
 profileEditBtn.addEventListener("click", function () {
   handleOpenEditModal();
