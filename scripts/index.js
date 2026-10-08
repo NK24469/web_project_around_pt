@@ -27,6 +27,33 @@ const initialCards = [
 
 const cardsList = document.querySelector(".cards__list");
 
+function getCardElement(
+  name = "Lugar sem nome",
+  link = "./images/placeholder.jpg",
+) {
+  const cardTemplate = document
+    .querySelector("#card__template")
+    .content.querySelector(".card");
+
+  const cardElement = cardTemplate.cloneNode(true);
+  const cardTitle = cardElement.querySelector(".card__title");
+  const cardImage = cardElement.querySelector(".card__image");
+  const cardLikeButton = cardElement.querySelector(".card__like-button");
+  const cardDelButton = cardElement.querySelector(".card__delete-button");
+
+  cardTitle.textContent = name;
+  cardImage.setAttribute("src", link);
+  cardImage.setAttribute("alt", name);
+
+  cardLikeButton.addEventListener("click", handleLikeButtonClick);
+
+  cardDelButton.addEventListener("click", handleDeleteButtonClick);
+
+  cardImage.addEventListener("click", handleCardImageClick);
+
+  return cardElement;
+}
+
 function renderCard(name, link, cardsList) {
   const cardElement = getCardElement(name, link);
   cardsList.prepend(cardElement);
@@ -107,7 +134,7 @@ function handleLikeButtonClick(evt) {
 }
 
 function handleDeleteButtonClick(evt) {
-  evt.target.parentElement.remove();
+  evt.target.closest(".card").remove();
 }
 
 function handleCardImageClick(evt) {
@@ -142,31 +169,3 @@ imagePopupClose.addEventListener("click", () => {
 });
 
 
-function getCardElement(
-  name = "Lugar sem nome",
-  link = "./images/placeholder.jpg",
-) {
-  const cardTemplate = document
-    .querySelector("#card__template")
-    .content.querySelector(".card");
-
-  const cardElement = cardTemplate.cloneNode(true);
-  const cardTitle = cardElement.querySelector(".card__title");
-  const cardImage = cardElement.querySelector(".card__image");
-  const cardLikeButton = cardElement.querySelector(".card__like-button");
-  const cardDelButton = cardElement.querySelector(".card__delete-button");
-
-  cardTitle.textContent = name;
-  cardImage.setAttribute("src", link);
-  cardImage.setAttribute("alt", name);
-
-  cardLikeButton.addEventListener("click", handleLikeButtonClick);
-
-  cardDelButton.addEventListener("click", handleDeleteButtonClick);
-
-  cardImage.addEventListener("click", handleCardImageClick);
-
-
-
-  return cardElement;
-}
