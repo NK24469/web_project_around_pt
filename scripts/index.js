@@ -58,6 +58,11 @@ const newCardForm = document.querySelector("#new-card-form");
 const cardNameInput = document.querySelector(".popup__input_type_card-name");
 const cardLinkInput = document.querySelector(".popup__input_type_url");
 
+const imagePopup = document.querySelector("#image-popup");
+const imagePopupClose = imagePopup.querySelector(".popup__close");
+const imagePopupImage = imagePopup.querySelector(".popup__image");
+const imagePopupCaption = imagePopup.querySelector(".popup__caption");
+
 function openModal(modal) {
   modal.classList.add("popup_is-opened");
 }
@@ -101,8 +106,15 @@ function handleLikeButtonClick(evt) {
   evt.target.classList.toggle("card__like-button_is-active");
 }
 
-function handleDeleteButtonClick(evt){
-  evt.target.parentElement.remove()
+function handleDeleteButtonClick(evt) {
+  evt.target.parentElement.remove();
+}
+
+function handleCardImageClick(evt) {
+  imagePopupCaption.textContent = evt.target.alt;
+  imagePopupImage.src = evt.target.src;
+  imagePopupImage.alt = evt.target.alt;
+  openModal(imagePopup);
 }
 
 newCardForm.addEventListener("submit", handleCardFormSubmit);
@@ -125,6 +137,11 @@ popupClose.addEventListener("click", function () {
   closeModal(profileEditModal);
 });
 
+imagePopupClose.addEventListener("click", () => {
+  closeModal(imagePopup);
+});
+
+
 function getCardElement(
   name = "Lugar sem nome",
   link = "./images/placeholder.jpg",
@@ -138,14 +155,18 @@ function getCardElement(
   const cardImage = cardElement.querySelector(".card__image");
   const cardLikeButton = cardElement.querySelector(".card__like-button");
   const cardDelButton = cardElement.querySelector(".card__delete-button");
-  
 
   cardTitle.textContent = name;
   cardImage.setAttribute("src", link);
+  cardImage.setAttribute("alt", name);
 
   cardLikeButton.addEventListener("click", handleLikeButtonClick);
 
   cardDelButton.addEventListener("click", handleDeleteButtonClick);
+
+  cardImage.addEventListener("click", handleCardImageClick);
+
+
 
   return cardElement;
 }
