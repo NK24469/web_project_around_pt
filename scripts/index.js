@@ -97,6 +97,14 @@ function handleCardFormSubmit(evt) {
   newCardForm.reset();
 }
 
+function handleLikeButtonClick(evt) {
+  evt.target.classList.toggle("card__like-button_is-active");
+}
+
+function handleDeleteButtonClick(evt){
+  evt.target.parentElement.remove()
+}
+
 newCardForm.addEventListener("submit", handleCardFormSubmit);
 
 cardAddBtn.addEventListener("click", () => {
@@ -128,9 +136,16 @@ function getCardElement(
   const cardElement = cardTemplate.cloneNode(true);
   const cardTitle = cardElement.querySelector(".card__title");
   const cardImage = cardElement.querySelector(".card__image");
+  const cardLikeButton = cardElement.querySelector(".card__like-button");
+  const cardDelButton = cardElement.querySelector(".card__delete-button");
+  
 
   cardTitle.textContent = name;
   cardImage.setAttribute("src", link);
+
+  cardLikeButton.addEventListener("click", handleLikeButtonClick);
+
+  cardDelButton.addEventListener("click", handleDeleteButtonClick);
 
   return cardElement;
 }
