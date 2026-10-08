@@ -25,8 +25,15 @@ let initialCards = [
   },
 ];
 
+const cardsList = document.querySelector(".cards__list");
+
+function renderCard(name, link, cardsList) {
+  const cardElement = getCardElement(name, link);
+  cardsList.prepend(cardElement);
+}
+
 initialCards.forEach(function (item) {
-  console.log(item.name);
+  renderCard(item.name, item.link, cardsList);
 });
 
 const profileEditBtn = document.querySelector(".profile__edit-button");
@@ -42,6 +49,14 @@ const aboutInput = profileEditModal.querySelector(
 );
 
 const profileForm = document.querySelector("#edit-profile-form");
+
+const cardAddBtn = document.querySelector(".profile__add-button");
+const popupNewCard = document.querySelector("#new-card-popup");
+const popupNewCardClose = popupNewCard.querySelector(".popup__close");
+const newCardForm = document.querySelector("#new-card-form");
+
+const cardNameInput = document.querySelector(".popup__input_type_card-name");
+const cardLinkInput = document.querySelector(".popup__input_type_url");
 
 function openModal(modal) {
   modal.classList.add("popup_is-opened");
@@ -70,6 +85,28 @@ function handleProfileFormSubmit(evt) {
   closeModal(profileEditModal);
 }
 
+function handleCardFormSubmit(evt) {
+  evt.preventDefault();
+
+  const cardName = cardNameInput.value;
+  const cardLink = cardLinkInput.value;
+
+  renderCard(cardName, cardLink, cardsList);
+  closeModal(popupNewCard);
+
+  newCardForm.reset();
+}
+
+newCardForm.addEventListener("submit", handleCardFormSubmit);
+
+cardAddBtn.addEventListener("click", () => {
+  openModal(popupNewCard);
+});
+
+popupNewCardClose.addEventListener("click", () => {
+  closeModal(popupNewCard);
+});
+
 profileForm.addEventListener("submit", handleProfileFormSubmit);
 
 profileEditBtn.addEventListener("click", function () {
@@ -79,3 +116,21 @@ profileEditBtn.addEventListener("click", function () {
 popupClose.addEventListener("click", function () {
   closeModal(profileEditModal);
 });
+
+function getCardElement(
+  name = "Lugar sem nome",
+  link = "./images/placeholder.jpg",
+) {
+  const cardTemplate = document
+    .querySelector("#card__template")
+    .content.querySelector(".card");
+
+  const cardElement = cardTemplate.cloneNode(true);
+  const cardTitle = cardElement.querySelector(".card__title");
+  const cardImage = cardElement.querySelector(".card__image");
+
+  cardTitle.textContent = name;
+  cardImage.setAttribute("src", link);
+
+  return cardElement;
+}
