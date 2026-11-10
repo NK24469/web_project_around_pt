@@ -69,18 +69,26 @@
           ></button>
           <h3 class="popup__title">Editar perfil</h3>
           <form class="popup__form" id="edit-profile-form">
-            <input
-              class="popup__input popup__input_type_name"
-              name="name"
-              placeholder="Nome"
-              type="text"
-            />
-            <input
-              class="popup__input popup__input_type_description"
-              name="description"
-              placeholder="Sobre mim"
-              type="text"
-            />
+            <label for="name" class="popup__field">
+              <input
+                class="popup__input popup__input_type_name"
+                name="name"
+                placeholder="Nome"
+                type="text"
+                id="name"
+              />
+              <span class="popup__error" id="name-error"></span>
+            </label>
+            <label for="description" class="popup__field">
+              <input
+                class="popup__input popup__input_type_description"
+                name="description"
+                placeholder="Sobre mim"
+                type="text"
+                id="description"
+              />
+              <span class="popup__error" id="description-error"></span>
+            </label>
             <button class="button popup__button" type="submit">Salvar</button>
           </form>
         </div>
@@ -94,20 +102,28 @@
           ></button>
           <h3 class="popup__title">Novo local</h3>
           <form class="popup__form" id="new-card-form">
-            <input
-              class="popup__input popup__input_type_card-name"
-              name="place-name"
-              placeholder="Título"
-              required
-              type="text"
-            />
-            <input
-              class="popup__input popup__input_type_url"
-              name="link"
-              placeholder="Link de Imagem"
-              required
-              type="url"
-            />
+            <label for="place-name" class="popup__field">
+              <input
+                class="popup__input popup__input_type_card-name"
+                name="place-name"
+                placeholder="Título"
+                required
+                type="text"
+                id="place-name"
+              />
+              <span class="popup__error" id="place-name-error"></span>
+            </label>
+            <label for="link" class="popup__field">
+              <input
+                class="popup__input popup__input_type_url"
+                name="link"
+                placeholder="Link de Imagem"
+                required
+                type="url"
+                id="link"
+              />
+              <span class="popup__error" id="link-error"></span>
+            </label>
             <button class="button popup__button" type="submit">Criar</button>
           </form>
         </div>
