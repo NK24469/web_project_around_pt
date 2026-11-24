@@ -68,7 +68,7 @@
             type="button"
           ></button>
           <h3 class="popup__title">Editar perfil</h3>
-          <form class="popup__form" id="edit-profile-form">
+          <form class="popup__form" id="edit-profile-form" novalidate>
             <label for="name" class="popup__field">
               <input
                 class="popup__input popup__input_type_name"
@@ -76,6 +76,9 @@
                 placeholder="Nome"
                 type="text"
                 id="name"
+                required
+                minlength="2"
+                maxlength="40"
               />
               <span class="popup__error" id="name-error"></span>
             </label>
@@ -86,6 +89,9 @@
                 placeholder="Sobre mim"
                 type="text"
                 id="description"
+                required
+                minlength="2"
+                maxlength="200"
               />
               <span class="popup__error" id="description-error"></span>
             </label>

@@ -76,6 +76,15 @@ const aboutInput = profileEditModal.querySelector(
 );
 
 const profileForm = document.querySelector("#edit-profile-form");
+const profileSubmitButton = profileForm.querySelector(".popup__button");
+const profileInputList = [nameInput, aboutInput];
+
+profileInputList.forEach((input) => {
+  input.addEventListener("input", () => {
+    checkInputValidity(profileForm, input);
+    toggleButtonState(profileInputList, profileSubmitButton);
+  });
+});
 
 const cardAddBtn = document.querySelector(".profile__add-button");
 const popupNewCard = document.querySelector("#new-card-popup");
@@ -105,6 +114,7 @@ function fillProfileForm() {
 
 function handleOpenEditModal() {
   fillProfileForm();
+  toggleButtonState(profileInputList, profileSubmitButton);
   openModal(profileEditModal);
 }
 
@@ -115,6 +125,46 @@ function handleProfileFormSubmit(evt) {
   profileAbout.textContent = aboutInput.value;
 
   closeModal(profileEditModal);
+}
+
+function showInputError(formElement, inputElement) {
+  const errorId = inputElement.id + "-error";
+  const errorElement = formElement.querySelector("#" + errorId);
+
+  errorElement.textContent = inputElement.validationMessage;
+  errorElement.classList.add("popup__error_visible");
+  inputElement.classList.add("popup__input_type_error");
+}
+
+function hideInputError(formElement, inputElement) {
+  const errorId = inputElement.id + "-error";
+  const errorElement = formElement.querySelector("#" + errorId);
+
+  errorElement.textContent = "";
+  errorElement.classList.remove("popup__error_visible");
+  inputElement.classList.remove("popup__input_type_error");
+}
+
+function checkInputValidity(formElement, inputElement) {
+  if (!inputElement.validity.valid) {
+    showInputError(formElement, inputElement);
+  } else {
+    hideInputError(formElement, inputElement);
+  }
+}
+
+function toggleButtonState(inputList, buttonElement) {
+  const hasInvalidInput = inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+  });
+
+  if (hasInvalidInput) {
+    buttonElement.disabled = true;
+    buttonElement.classList.add("popup__button_disabled");
+  } else {
+    buttonElement.disabled = false;
+    buttonElement.classList.remove("popup__button_disabled");
+  }
 }
 
 function handleCardFormSubmit(evt) {
@@ -167,5 +217,3 @@ popupClose.addEventListener("click", function () {
 imagePopupClose.addEventListener("click", () => {
   closeModal(imagePopup);
 });
-
-
